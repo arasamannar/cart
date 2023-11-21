@@ -1,4 +1,13 @@
+import React, { useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+
 function Nav() {
+  const [showCart, setShowCart] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+
+  const handleShow = () => setShowCart(true);
+  const handleClose = () => setShowCart(false);
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -63,17 +72,42 @@ function Nav() {
               </li>
             </ul>
             <form className="d-flex">
-              <button className="btn btn-outline-dark" type="submit">
+              <Button
+                className="btn btn-outline-dark"
+                onClick={handleShow}
+              >
                 <i className="bi-cart-fill me-1"></i>
                 Cart
                 <span className="badge bg-dark text-white ms-1 rounded-pill">
-                  0
+                  {cartItems.length}
                 </span>
-              </button>
+              </Button>
             </form>
           </div>
         </div>
       </nav>
+
+      <Modal show={showCart} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Your Cart</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {cartItems.length === 0 ? (
+            <p>No items in the cart</p>
+          ) : (
+            <ul>
+              {cartItems.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close Cart
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
