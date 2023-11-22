@@ -7,6 +7,8 @@ function Nav() {
 
   const handleShow = () => setShowCart(true);
   const handleClose = () => setShowCart(false);
+  const changeColor = () => {
+  }
 
   return (
     <>
@@ -103,7 +105,7 @@ function Nav() {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose} onMouseOver={changeColor}>
             Close Cart
           </Button>
         </Modal.Footer>
