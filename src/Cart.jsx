@@ -1,7 +1,6 @@
-import { useState } from "react";
-import Nav from './Nav';
 
-function Cart({details}) {
+
+function Cart({details,handleAddtoCart}) {
   return (
 
     <>
@@ -21,17 +20,30 @@ function Cart({details}) {
           <div className="card-body p-4">
             <div className="text-center">
               <h5 className="fw-bolder">{details.headName} </h5>
-              <span className="text-muted text-decoration-line-through">
+              {(details.headName) === 'Popular Item'? (<div className="d-flex justify-content-center small text-warning mb-2">
+                                        <div className="bi-star-fill"></div>
+                                        <div className="bi-star-fill"></div>
+                                        <div className="bi-star-fill"></div>
+                                        <div className="bi-star-fill"></div>
+                                        <div className="bi-star-fill"></div>
+              </div>) : (details.headName) === 'Special Item'? (<div className="d-flex justify-content-center small text-warning mb-2">
+                                        <div className="bi-star-fill"></div>
+                                        <div className="bi-star-fill"></div>
+                                        <div className="bi-star-fill"></div>
+                                        <div className="bi-star-fill"></div>
+                                        <div className="bi-star-fill"></div>
+              </div>) : null }
+              {(details.headName === 'Popular Item') ? null : <span className="text-muted text-decoration-line-through">
                 ${details.originalPrice}.00
-              </span>
-              ${details.discountedPrice}.00
+              </span>}
+              {(details.headName === 'Popular Item')? `$${details.singlePrice}.00` : `$${details.discountedPrice}.00`}
             </div>
           </div>
           <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div className="text-center">
-              <a className="btn btn-outline-dark mt-auto" href="#">
+              <button className="btn btn-outline-dark mt-auto" onClick={() => handleAddtoCart(details)}>
                 {details.last}
-              </a>
+              </button>
             </div>
           </div>
         </div>
