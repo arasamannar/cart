@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
-function Nav() {
+function Nav({addcart, handleRemove, totalPrice}) {
   const [showCart, setShowCart] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
 
   const handleShow = () => setShowCart(true);
   const handleClose = () => setShowCart(false);
-  const changeColor = () => {
-  }
-
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -81,7 +77,7 @@ function Nav() {
                 <i className="bi-cart-fill me-1"></i>
                 Cart
                 <span className="badge bg-dark text-white ms-1 rounded-pill">
-                  {cartItems.length}
+                  {addcart.length}
                 </span>
               </Button>
             </form>
@@ -94,18 +90,25 @@ function Nav() {
           <Modal.Title>Your Cart</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {cartItems.length === 0 ? (
+          {addcart.length === 0 ? (
             <p>No items in the cart</p>
           ) : (
-            <ul>
-              {cartItems.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
+            <ol>
+              {addcart.map((item, index) => {
+                return <>
+                <div className='cartlist'>
+                  <li key={index}>{item.headName}</li>
+                  <div >${(item.discountedPrice)? item.discountedPrice : item.singlePrice}</div>
+                  <button className='btn btn-danger btn-sm' onClick={() => {handleRemove(item)}}>X</button>
+                </div>
+                </>
+                })}
+            </ol>
           )}
+          <div>Total Price ${totalPrice}</div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose} onMouseOver={changeColor}>
+          <Button variant="secondary" onClick={handleClose}>
             Close Cart
           </Button>
         </Modal.Footer>
